@@ -92,7 +92,7 @@ const CertificateSection = () => {
       title: "CODE FEST 2025",
       issuer: "Arunai Engineering College",
       date: "February 2025",
-      imageUrl: "/images/certificates/sertif-hackathon.jpeg",
+      imageUrl: "/images/sertif-hackathon.jpeg",
       alt: "CODE FEST 2025 Certificate",
     },
   ];
