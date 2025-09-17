@@ -1,26 +1,26 @@
-import { Heart, CheckCircle, Target, Zap, Bot, User } from 'lucide-react';
+import { Heart, Target, Zap, Bot } from 'lucide-react';
 import { StatCard, EmojiCard } from './ui/brutalist-card';
 
 const AboutSection = () => {
   const stats = [
     {
       icon: <Target className="w-8 h-8 text-[#00bcd4]" />,
-      number: "25+",
+      number: "5+",
       label: "Projects Built"
     },
     {
       icon: <Zap className="w-8 h-8 text-[#2196f3]" />,
-      number: "4+",
+      number: "2+",
       label: "Years Experience"
     },
     {
       icon: <Heart className="w-8 h-8 text-[#e91e63]" />,
-      number: "8+",
+      number: "3+",
       label: "Open Source Contributions"
     },
     {
       icon: <Bot className="w-8 h-8 text-[#9c27b0]" />,
-      number: "10+",
+      number: "5+",
       label: "Happy Clients"
     }
   ];
@@ -28,28 +28,25 @@ const AboutSection = () => {
   const highlights = [
     {
       icon: "⚛️",
-      text: "Specialized in React, Next.js, Node.js, and full-stack development"
+      text: "Expert in React, Next.js, Node.js, and modern full-stack development"
     },
     {
       icon: "⚡",
-      text: "Experience with MongoDB, PostgreSQL, Firebase, and AWS"
+      text: "Proficient with MySQL, MongoDB, PostgreSQL, Firebase, and cloud platforms"
     },
     {
       icon: "🚀",
-      text: "Built platforms serving thousands of active users"
+      text: "Experience building scalable applications for diverse industries"
     },
     {
       icon: "🌟",
-      text: "Open-source contributor and continuous learner"
+      text: "Committed to best practices, clean code, and continuous learning"
     }
   ];
 
   return (
     <section id="about" className="py-20 bg-[#faf9f6] relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute w-24 h-24 bg-[#00bcd4] rounded-full border-4 border-black top-20 left-10 lg:z-auto -z-10"></div>
-      <div className="absolute w-16 h-16 bg-[#ff9800] rounded-full border-4 border-black bottom-20 right-20 lg:z-auto -z-10"></div>
-      
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left side - About content */}
@@ -64,10 +61,10 @@ const AboutSection = () => {
             </h2>
             
             <p className="text-lg text-gray-700 leading-relaxed">
-              I'm a dedicated full-stack developer with expertise in modern web technologies 
-              including React, Node.js, and database management. I focus on building scalable, 
-              user-friendly applications that solve real problems and deliver exceptional 
-              user experiences.
+              A passionate full-stack developer with expertise in modern web technologies 
+              and a strong focus on creating scalable, user-friendly applications. Experienced 
+              in building end-to-end solutions that deliver exceptional user experiences and 
+              drive business success through innovative technology.
             </p>
             
             {/* Highlights */}

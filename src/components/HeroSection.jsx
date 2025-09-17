@@ -1,12 +1,13 @@
+import { TypeAnimation } from 'react-type-animation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { faGithub, faLinkedin, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faInstagram, faLinkedin, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 
 const HeroSection = () => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ 
+      element.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
@@ -32,28 +33,35 @@ const HeroSection = () => {
             {/* Location badge */}
             <div className="inline-flex items-center gap-2 bg-[#a8f0dc] border-4 border-black rounded-full px-6 py-3 font-bold shadow-[4px_4px_0px_0px_#000000]">
               <FontAwesomeIcon icon={faMapMarkerAlt} className="w-5 h-5" />
-              San Francisco
+              Available Worldwide
             </div>
             
             {/* Main heading */}
             <div className="space-y-4">
               <h1 className="text-6xl lg:text-8xl font-black leading-tight">
-                <span className="gradient-text">Alex</span>
-                <br />
-                <span className="gradient-text">Morgan</span>
-                <span className="text-black">|</span>
+                <TypeAnimation
+                  sequence={[
+                    'Agung Bayu Saputra',
+                    1000, // wait 1s before blinking
+                  ]}
+                  wrapper="span"
+                  speed={50}
+                  repeat={0} // Do not repeat
+                  cursor={true} // Show blinking cursor
+                  className="gradient-text"
+                />
               </h1>
               
               <h2 className="text-2xl lg:text-3xl font-bold text-[#00bcd4]">
-                Full-Stack Developer | React & Node.js
+                Full-Stack Developer | Modern Web Solutions
               </h2>
             </div>
             
             {/* Description */}
             <p className="text-lg lg:text-xl text-gray-700 max-w-2xl leading-relaxed">
-              Passionate full-stack developer with expertise in modern web technologies. 
-              I create scalable, user-centric applications that solve real-world problems 
-              with clean code and innovative design.
+              Experienced developer specializing in modern web technologies and scalable applications. 
+              Creating innovative digital solutions with clean, maintainable code and exceptional 
+              user experiences that drive business growth.
             </p>
             
             {/* CTA Buttons */}
@@ -80,14 +88,14 @@ const HeroSection = () => {
             
             {/* Social Links */}
             <div className="flex gap-4">
-              <a href="#" className="w-16 h-16 border-4 border-black rounded-2xl flex items-center justify-center text-2xl transition-all duration-200 shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] hover:translate-x-[-1px] hover:translate-y-[-1px] bg-[#9c27b0]">
+              <a href="https://github.com/BayuArlert" className="w-16 h-16 border-4 border-black rounded-2xl flex items-center justify-center text-2xl transition-all duration-200 shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] hover:translate-x-[-1px] hover:translate-y-[-1px] bg-[#9c27b0]">
                 <FontAwesomeIcon icon={faGithub} className="w-8 h-8 text-white" />
               </a>
-              <a href="#" className="w-16 h-16 border-4 border-black rounded-2xl flex items-center justify-center text-2xl transition-all duration-200 shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] hover:translate-x-[-1px] hover:translate-y-[-1px] bg-[#00bcd4]">
+              <a href="https://www.linkedin.com/in/agung-bayu-131a47295/" className="w-16 h-16 border-4 border-black rounded-2xl flex items-center justify-center text-2xl transition-all duration-200 shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] hover:translate-x-[-1px] hover:translate-y-[-1px] bg-[#00bcd4]">
                 <FontAwesomeIcon icon={faLinkedin} className="w-8 h-8 text-white" />
               </a>
-              <a href="#" className="w-16 h-16 border-4 border-black rounded-2xl flex items-center justify-center text-2xl transition-all duration-200 shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] hover:translate-x-[-1px] hover:translate-y-[-1px] bg-[#e91e63]">
-                <FontAwesomeIcon icon={faXTwitter} className="w-8 h-8 text-white" />
+              <a href="https://www.instagram.com/by.u_arlert/" className="w-16 h-16 border-4 border-red rounded-2xl flex items-center justify-center text-2xl transition-all duration-200 shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] hover:translate-x-[-1px] hover:translate-y-[-1px] bg-[#e91e63]">
+                <FontAwesomeIcon icon={faInstagram} className="w-8 h-8 text-white" />
               </a>
             </div>
           </div>
@@ -97,7 +105,7 @@ const HeroSection = () => {
             <div className="relative">
               {/* Decorative frame */}
               <div className="bg-white border-4 border-black rounded-2xl shadow-[8px_8px_0px_0px_#000000] transition-all duration-200 hover:shadow-[12px_12px_0px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] w-80 h-80 flex items-center justify-center">
-                <span className="text-8xl font-black gradient-text">AM</span>
+                <span className="text-8xl font-black gradient-text">DEV</span>
               </div>
               
               {/* Decorative circles around the frame */}

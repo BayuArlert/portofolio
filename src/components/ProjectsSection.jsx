@@ -5,19 +5,23 @@ const ProjectsSection = () => {
   const projects = [
     {
       id: '01',
-      title: 'TaskFlow Pro',
-      description: 'Modern project management application with real-time collaboration, team chat, and advanced task tracking features for remote teams.',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'JWT'],
+      title: 'Payment of School Tuition Fees',
+      description: 'A web-based application for digitally managing tuition payments. Key features include student data management, bill checking, payment history, proof of payment printing, and financial reports accessible in real time by schools.',
+      technologies: ['Laravel', 'Bootstrap', 'MySQL'],
       bgColor: 'bg-gradient-to-br from-purple-500 to-blue-600',
-      textColor: 'text-white'
+      textColor: 'text-white',
+      githubUrl: 'https://github.com/RPL-Esemka-Mussi/SPP-Sekolah_Agung-Bayu-Saputra',
+      externalUrl: 'https://spp-payment-demo.vercel.app'
     },
     {
       id: '02',
-      title: 'EcoTracker',
-      description: 'Environmental impact tracking application helping users monitor their carbon footprint and discover sustainable lifestyle choices.',
-      technologies: ['Vue.js', 'Express.js', 'PostgreSQL', 'Chart.js', 'Stripe'],
+      title: 'Scanner Image - Phone Number Extraction',
+      description: 'An application that can scan images to automatically detect and extract phone numbers using the Gemini API. This project simplifies the process of quickly and accurately retrieving contact data from images.',
+      technologies: ['Node.js', 'HTML', 'CSS', 'API Gemini'],
       bgColor: 'bg-gradient-to-br from-cyan-400 to-blue-500',
-      textColor: 'text-white'
+      textColor: 'text-white',
+      githubUrl: 'https://github.com/yourusername/phone-scanner',
+      externalUrl: 'https://phone-scanner-demo.netlify.app'
     }
   ];
 
@@ -38,7 +42,9 @@ const ProjectsSection = () => {
     <section id="projects" className="py-20 bg-[#faf9f6] relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute w-32 h-32 bg-[#e91e63] rounded-full border-4 border-black top-20 right-10 lg:z-auto -z-10"></div>
-      <div className="absolute w-20 h-20 bg-[#00bcd4] rounded-full border-4 border-black bottom-20 left-10 lg:z-auto -z-10"></div>
+      <div className="absolute w-20 h-20 bg-[#2196f3] rounded-full border-4 border-black top-32 left-32 lg:z-auto -z-10"></div>
+      <div className="absolute w-16 h-16 bg-[#a8f0dc] rounded-full border-4 border-black top-20 left-25 lg:z-auto -z-10"></div>
+      <div className="absolute w-20 h-20 bg-[#00bcd4] rounded-full border-4 border-black top-315 left-10 lg:z-auto -z-10"></div>
       
       <div className="container mx-auto px-6">
         {/* Section Header */}
@@ -69,28 +75,10 @@ const ProjectsSection = () => {
               bgColor={project.bgColor}
               textColor={project.textColor}
               projectId={project.id}
-              onExternalClick={() => console.log('External link clicked')}
-              onGithubClick={() => console.log('GitHub link clicked')}
+              onExternalClick={() => window.open(project.externalUrl, '_blank')}
+              onGithubClick={() => window.open(project.githubUrl, '_blank')}
             />
           ))}
-        </div>
-
-        {/* Additional Projects */}
-        <div>
-          <h3 className="text-3xl font-black mb-8 text-center">
-            <span className="gradient-text">More Creative Work</span>
-          </h3>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {additionalProjects.map((project, index) => (
-              <SimpleProjectCard
-                key={index}
-                title={project.title}
-                description={project.description}
-                technologies={project.technologies}
-              />
-            ))}
-          </div>
         </div>
       </div>
     </section>

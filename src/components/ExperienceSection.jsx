@@ -4,7 +4,7 @@ import { ExperienceCard } from './ui/brutalist-card';
 const ExperienceSection = () => {
   const experiences = [
     {
-      title: 'Senior Full Stack Developer',
+      title: 'Code Fest - Hackathon',
       company: 'TechStart Solutions',
       period: 'Jan 2023 – Present',
       location: 'San Francisco, CA',
@@ -96,24 +96,6 @@ const ExperienceSection = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div id="contact" className="text-center mt-20">
-          <div className="bg-white border-4 border-black rounded-2xl shadow-[8px_8px_0px_0px_#000000] transition-all duration-200 hover:shadow-[12px_12px_0px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] max-w-2xl mx-auto p-8 bg-gradient-to-r from-[#00bcd4] to-[#2196f3] text-white">
-            <h3 className="text-3xl font-black mb-4">Ready to Work Together?</h3>
-            <p className="text-lg mb-6 opacity-90">
-              Let's create something amazing together. I'm always excited to take on new challenges and build innovative solutions.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <button className="bg-white text-[#00bcd4] px-8 py-4 rounded-2xl font-bold border-4 border-black shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all">
-                Get In Touch
-              </button>
-              <button className="bg-transparent border-4 border-white text-white px-8 py-4 rounded-2xl font-bold shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)] hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.3)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all">
-                View Resume
-              </button>
-            </div>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import AboutSection from './components/AboutSection';
 import SkillsSection from './components/SkillsSection';
 import ProjectsSection from './components/ProjectsSection';
 import ExperienceSection from './components/ExperienceSection';
+import CertificateSection from './components/CertificateSection';
 import './App.css';
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
       <AboutSection />
       <SkillsSection />
       <ProjectsSection />
-      <ExperienceSection />
+      {/* <ExperienceSection /> */}
+      <CertificateSection />
     </div>
   );
 }

@@ -67,12 +67,116 @@ const SkillsSection = () => {
         stars: 5
       },
       {
+        icon: '🅱️',
+        name: 'Bootstrap',
+        level: 'Advanced',
+        levelColor: 'bg-[#7952B3]',
+        description: 'Responsive front-end framework',
+        stars: 4
+      },
+      {
         icon: '🌊',
         name: 'Framer Motion',
         level: 'Proficient',
         levelColor: 'bg-[#2196f3]',
         description: 'Smooth animations & interactions',
         stars: 3
+      }
+    ],
+
+    backend: [
+      {
+        icon: '🐘',
+        name: 'PHP',
+        level: 'Advanced',
+        levelColor: 'bg-[#8892BF]',
+        description: 'Server-side scripting & web development',
+        stars: 4
+      },
+      {
+        icon: '🐍',
+        name: 'Python',
+        level: 'Expert',
+        levelColor: 'bg-[#306998]',
+        description: 'Versatile scripting & data processing',
+        stars: 5
+      },
+      {
+        icon: '🟢',
+        name: 'Node.js',
+        level: 'Advanced',
+        levelColor: 'bg-[#68A063]',
+        description: 'Scalable network applications',
+        stars: 4
+      },
+      {
+        icon: '⚙️',
+        name: 'Laravel',
+        level: 'Advanced',
+        levelColor: 'bg-[#FF2D20]',
+        description: 'PHP web application framework',
+        stars: 4
+      }
+    ],
+
+    ai: [
+      {
+        icon: '🧠',
+        name: 'Machine Learning',
+        level: 'Upper Intermediate',
+        levelColor: 'bg-[#FFC107]',
+        description: 'Membangun & melatih model yang belajar dari data (Python, scikit-learn, TensorFlow, PyTorch)',
+        stars: 3
+      },
+      {
+        icon: '🤖',
+        name: 'Deep Learning',
+        level: 'Upper Intermediate',
+        levelColor: 'bg-[#FF5722]',
+        description: 'Jaringan saraf tiruan untuk tugas kompleks (TensorFlow, PyTorch)',
+        stars: 3
+      },
+      {
+        icon: '👁️',
+        name: 'Computer Vision',
+        level: 'Upper Intermediate',
+        levelColor: 'bg-[#9C27B0]',
+        description: 'Kemampuan komputer untuk "melihat" & menginterpretasikan gambar/video',
+        stars: 3
+      },
+      {
+        icon: '📊',
+        name: 'Data Science/Analytics',
+        level: 'Upper Intermediate',
+        levelColor: 'bg-[#4CAF50]',
+        description: 'Pengumpulan, pembersihan, analisis, & interpretasi data',
+        stars: 3
+      }
+    ],
+    devops: [
+      {
+        icon: '🐙',
+        name: 'Version Control',
+        level: 'Intermediate',
+        levelColor: 'bg-[#2196F3]',
+        description: 'Mengelola perubahan kode dan kolaborasi tim (Git, GitHub)',
+        stars: 5
+      },
+      {
+        icon: '🚀',
+        name: 'CI/CD Tools',
+        level: 'Intermediate',
+        levelColor: 'bg-[#FF9800]',
+        description: 'Mengotomatisasi proses build, test, dan deploy aplikasi (Jenkins, GitLab CI, GitHub Actions, CircleCI)',
+        stars: 4
+      },
+      {
+        icon: '📝',
+        name: 'Scripting',
+        level: 'Intermediate',
+        levelColor: 'bg-[#607D8B]',
+        description: 'Otomatisasi tugas-tugas operasional (Bash, Python, PowerShell)',
+        stars: 4
       }
     ]
   };
@@ -104,7 +208,7 @@ const SkillsSection = () => {
     <section id="skills" className="py-20 bg-[#faf9f6] relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute w-20 h-20 bg-[#ff9800] rounded-full border-4 border-black top-10 left-20 lg:z-auto -z-10"></div>
-      <div className="absolute w-16 h-16 bg-[#9c27b0] rounded-full border-4 border-black bottom-10 right-10 lg:z-auto -z-10"></div>
+      <div className="absolute w-16 h-16 bg-[#2196f3] rounded-full border-4 border-black top-115 left-285 lg:z-auto -z-10"></div>
       
       <div className="container mx-auto px-6">
         {/* Section Header */}
