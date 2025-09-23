@@ -1,5 +1,5 @@
 import { Star } from 'lucide-react';
-import { ProjectCard, SimpleProjectCard } from './ui/brutalist-card';
+import { ProjectCard } from './ui/brutalist-card';
 
 const ProjectsSection = () => {
   const projects = [
@@ -25,30 +25,16 @@ const ProjectsSection = () => {
     }
   ];
 
-  const additionalProjects = [
-    {
-      title: 'RecipeShare',
-      description: 'Social recipe sharing platform where food enthusiasts can discover, save, and share their favorite recipes with a vibrant community.',
-      technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB']
-    },
-    {
-      title: 'FitnessTracker',
-      description: 'Comprehensive fitness tracking application with workout logging, progress visualization, and personalized fitness recommendations.',
-      technologies: ['React Native', 'Node.js', 'MySQL', 'Chart.js']
-    }
-  ];
-
   return (
     <section id="projects" className="py-20 bg-[#faf9f6] relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute w-32 h-32 bg-[#e91e63] rounded-full border-4 border-black top-20 right-10 lg:z-auto -z-10"></div>
       <div className="absolute w-20 h-20 bg-[#2196f3] rounded-full border-4 border-black top-32 left-32 lg:z-auto -z-10"></div>
       <div className="absolute w-16 h-16 bg-[#a8f0dc] rounded-full border-4 border-black top-20 left-25 lg:z-auto -z-10"></div>
-      <div className="absolute w-20 h-20 bg-[#00bcd4] rounded-full border-4 border-black top-315 left-10 lg:z-auto -z-10"></div>
       
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 lg:mb-16">
           <div className="inline-flex items-center gap-2 bg-white border-4 border-black rounded-full px-6 py-3 font-bold shadow-[4px_4px_0px_0px_#000000] mb-8">
             <Star className="w-5 h-5 text-yellow-500" />
             Featured Work

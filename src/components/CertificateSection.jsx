@@ -110,7 +110,7 @@ const CertificateSection = () => {
   return (
     <section
       id="certificate"
-      className="py-20 bg-[#faf9f6] relative overflow-hidden"
+      className="py-5 bg-[#faf9f6] relative overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute w-24 h-24 bg-[#ff9800] rounded-full border-4 border-black top-10 right-20 lg:z-auto -z-10"></div>
@@ -119,7 +119,7 @@ const CertificateSection = () => {
 
       <div className="container mx-auto px-6">
         {/* Certificates Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 lg:mb-16">
           <div className="inline-flex items-center gap-2 bg-white border-4 border-black rounded-full px-6 py-3 font-bold shadow-[4px_4px_0px_0px_#000000] mb-8">
             <Award className="w-5 h-5 text-[#ff9800]" />
             Professional Certifications

@@ -45,7 +45,7 @@ const AboutSection = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-[#faf9f6] relative overflow-hidden">
+    <section id="about" className="py-10 bg-[#faf9f6] relative overflow-hidden">
       {/* Decorative elements */}
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-start">

@@ -140,7 +140,7 @@ const ProjectCard = React.forwardRef(({
           )}
           
           {/* Mock project interface */}
-          <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-6 w-full max-w-md">
+          <div className="bg-white/10 mt-20 lg:mt-0 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-6 w-full max-w-md">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-red-400 rounded-full"></div>
               <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
@@ -161,7 +161,7 @@ const ProjectCard = React.forwardRef(({
         
         {/* Project Details */}
         <div className="p-8 flex flex-col justify-center">
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-4">
             <h3 className="text-3xl font-black">{title}</h3>
             <div className="flex gap-2">
               {onExternalClick && (
