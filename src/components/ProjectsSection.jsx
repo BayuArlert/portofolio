@@ -21,7 +21,7 @@ const ProjectsSection = () => {
       bgColor: 'bg-gradient-to-br from-cyan-400 to-blue-500',
       textColor: 'text-white',
       githubUrl: 'https://github.com/yourusername/phone-scanner',
-      externalUrl: 'https://phone-scanner-demo.netlify.app'
+      externalUrl: 'https://scanner-img.vercel.app/'
     }
   ];
 
