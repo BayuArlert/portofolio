@@ -27,20 +27,20 @@ const AboutSection = () => {
 
   const highlights = [
     {
-      icon: "⚛️",
-      text: "Expert in React, Next.js, Node.js, and modern full-stack development"
+      icon: "⚡",
+      text: "High-Velocity Shipping: Rapidly turning ideas into functional apps using modern AI workflows"
     },
     {
-      icon: "⚡",
-      text: "Proficient with MySQL, MongoDB, PostgreSQL, Firebase, and cloud platforms"
+      icon: "🧠",
+      text: "Solid Fundamentals: Deep grasp of JavaScript, React lifecycles, state management, and architecture"
+    },
+    {
+      icon: "🔍",
+      text: "Critical Code Auditing: Evaluating, debugging, and refining code for security and maintainability"
     },
     {
       icon: "🚀",
-      text: "Experience building scalable applications for diverse industries"
-    },
-    {
-      icon: "🌟",
-      text: "Committed to best practices, clean code, and continuous learning"
+      text: "Modern Full-Stack Mastery: Hands-on expertise with React, Node.js, modern databases, and clean UI"
     }
   ];
 
@@ -56,16 +56,18 @@ const AboutSection = () => {
               About Me
             </div>
             
-            <h2 className="text-5xl lg:text-6xl font-black">
-              <span className="gradient-text">About Me</span>
+            <h2 className="text-4xl lg:text-5xl font-black leading-tight">
+              <span className="gradient-text">Vibe Coding, Anchored in Strong Foundations.</span>
             </h2>
             
-            <p className="text-lg text-gray-700 leading-relaxed">
-              A passionate full-stack developer with expertise in modern web technologies 
-              and a strong focus on creating scalable, user-friendly applications. Experienced 
-              in building end-to-end solutions that deliver exceptional user experiences and 
-              drive business success through innovative technology.
-            </p>
+            <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
+              <p>
+                I actively embrace the modern era of software development—leveraging state-of-the-art AI to iterate rapidly and ship features at high velocity.
+              </p>
+              <p>
+                However, speed without understanding is fragile. Behind every prompt and generated line, I bring a solid foundation in web architecture, data flow, and debugging logic. I don't just blindly copy-paste code; I architect, audit, and refine it into robust, production-ready applications. Think of AI as the accelerator, and strong core engineering as the steering wheel.
+              </p>
+            </div>
             
             {/* Highlights */}
             <div className="space-y-4">

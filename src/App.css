@@ -141,3 +141,15 @@
     display: none;
   }
 }
+
+/* Hide Spline Watermark Badge */
+a[href*="spline.design"],
+a[href*="spline.com"],
+#spline-watermark,
+.spline-watermark,
+[data-spline-logo] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}

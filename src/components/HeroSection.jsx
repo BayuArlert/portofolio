@@ -1,9 +1,45 @@
+import { Suspense, lazy, useState, useRef, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { faGithub, faInstagram, faLinkedin, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { Volume2, VolumeX, Music } from 'lucide-react';
+
+const Spline = lazy(() => import('@splinetool/react-spline'));
 
 const HeroSection = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.2; // Backsound tipis & santai (20% volume)
+    }
+  }, []);
+
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.volume = 0.2;
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch((err) => console.error('Audio playback error:', err));
+    }
+  };
+
+  const handleSplineLoad = (spline) => {
+    // Disable orbit/drag controls so camera stays fixed
+    try {
+      if (spline._camera?.controls) {
+        spline._camera.controls.enabled = false;
+      }
+      const controls = spline.findObjectByName?.('Camera');
+      if (controls?.controls) controls.controls.enabled = false;
+    } catch (_) {}
+  };
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -19,13 +55,9 @@ const HeroSection = () => {
     // For now, we'll scroll to the skills section to showcase abilities
     scrollToSection('skills');
   };
+
   return (
     <section className="relative min-h-screen bg-[#faf9f6] overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute w-32 h-32 bg-[#00bcd4] rounded-full border-4 border-black top-10 right-10 lg:z-auto -z-10"></div>
-      <div className="absolute w-20 h-20 bg-[#2196f3] rounded-full border-4 border-black top-32 right-32 lg:z-auto -z-10"></div>
-      <div className="absolute w-16 h-16 bg-[#a8f0dc] rounded-full border-4 border-black top-20 right-52 lg:z-auto -z-10"></div>
-      
       <div className="container mx-auto px-6 py-12 lg:pt-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
           {/* Left side - Content */}
@@ -53,15 +85,13 @@ const HeroSection = () => {
               </h1>
               
               <h2 className="text-2xl lg:text-3xl font-bold text-[#00bcd4]">
-                Full-Stack Developer | Modern Web Solutions
+                AI-Powered Builder | Vibe Coding with Rock-Solid Fundamentals
               </h2>
             </div>
             
             {/* Description */}
             <p className="text-lg lg:text-xl text-gray-700 max-w-2xl leading-relaxed">
-              Experienced developer specializing in modern web technologies and scalable applications. 
-              Creating innovative digital solutions with clean, maintainable code and exceptional 
-              user experiences that drive business growth.
+              Building high-velocity web solutions by embracing modern AI workflows without compromising core engineering principles. Fast execution, architectural clarity, and real-world results.
             </p>
             
             {/* CTA Buttons */}
@@ -100,19 +130,73 @@ const HeroSection = () => {
             </div>
           </div>
           
-          {/* Right side - KP Logo */}
-          <div className="flex justify-center lg:justify-end">
-            <div className="relative">
-              {/* Decorative frame */}
-              <div className="bg-white border-4 border-black rounded-2xl shadow-[8px_8px_0px_0px_#000000] transition-all duration-200 hover:shadow-[12px_12px_0px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] w-80 h-80 flex items-center justify-center">
-                <span className="text-8xl font-black gradient-text">DEV</span>
-              </div>
-              
-              {/* Decorative circles around the frame */}
-              <div className="absolute w-12 h-12 bg-[#2196f3] rounded-full border-4 border-black -top-6 -left-6 lg:z-auto -z-10"></div>
-              <div className="absolute w-8 h-8 bg-[#00bcd4] rounded-full border-4 border-black -top-4 -right-4 lg:z-auto -z-10"></div>
-              <div className="absolute w-10 h-10 bg-[#a8f0dc] rounded-full border-4 border-black -bottom-5 -left-5 lg:z-auto -z-10"></div>
-              <div className="absolute w-6 h-6 bg-[#ff9800] rounded-full border-4 border-black -bottom-3 -right-3 lg:z-auto -z-10"></div>
+          {/* Right side - 3D Spline Room (canvas, transparan, menyatu) */}
+          <div className="w-full h-[500px] lg:h-[680px] relative overflow-hidden rounded-3xl">
+            {/* Audio element for relaxing chill lo-fi */}
+            <audio
+              ref={audioRef}
+              src="/audio/chill-lofi.mp3"
+              loop
+              preload="auto"
+            />
+
+            <Suspense
+              fallback={
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="w-10 h-10 border-4 border-[#00bcd4] border-t-transparent rounded-full animate-spin" />
+                    <span className="text-sm font-bold text-gray-500">Loading 3D Room...</span>
+                  </div>
+                </div>
+              }
+            >
+              <Spline
+                scene="https://prod.spline.design/wUBM6zWlm4o2qfc4/scene.splinecode"
+                onLoad={handleSplineLoad}
+                style={{ width: '100%', height: '100%' }}
+              />
+              {/* Transparent overlay — blok drag/orbit agar kamera tetap fix */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  zIndex: 10,
+                  cursor: 'default',
+                }}
+              />
+            </Suspense>
+
+            {/* Interactive Speaker Widget (Bottom Right) */}
+            <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={toggleAudio}
+                className="group bg-white/95 backdrop-blur-md border-3 border-black rounded-2xl px-4 py-2.5 shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2.5 text-sm font-black cursor-pointer"
+                title="Klik untuk nyalakan/matikan backsound santai"
+              >
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center border-2 border-black transition-colors ${isPlaying ? 'bg-[#00bcd4] text-white' : 'bg-gray-100 text-gray-700'}`}>
+                  {isPlaying ? (
+                    <Volume2 className="w-4 h-4 animate-pulse" />
+                  ) : (
+                    <VolumeX className="w-4 h-4" />
+                  )}
+                </div>
+
+                <div className="flex flex-col items-start leading-tight">
+                  <span className="text-[10px] text-gray-500 uppercase tracking-wider font-extrabold">Room Speaker</span>
+                  <span className="text-xs font-black text-black">
+                    {isPlaying ? 'Chill Lo-Fi: ON' : 'Sound: OFF'}
+                  </span>
+                </div>
+
+                {isPlaying && (
+                  <div className="flex items-end gap-1 h-3.5 ml-1">
+                    <span className="w-1 bg-[#00bcd4] rounded-full animate-bounce [animation-duration:0.6s] h-3.5" />
+                    <span className="w-1 bg-[#2196f3] rounded-full animate-bounce [animation-duration:0.8s] h-2.5" />
+                    <span className="w-1 bg-[#e91e63] rounded-full animate-bounce [animation-duration:0.5s] h-3" />
+                  </div>
+                )}
+              </button>
             </div>
           </div>
         </div>
