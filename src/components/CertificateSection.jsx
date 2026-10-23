@@ -170,7 +170,7 @@ const CertificateSection = () => {
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <a
-                href="http://wa.me/6285643116008"
+                href="https://api.whatsapp.com/send/?phone=6285643116008&text&type=phone_number&app_absent=0"
                 target="_blank"
                 rel="noopener noreferrer"
               >

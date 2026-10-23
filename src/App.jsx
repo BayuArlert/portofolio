@@ -20,7 +20,7 @@ function App() {
           onComplete={() => setLoading(false)} 
         />
       )}
-      <HeroSection on3DLoaded={() => setIs3DReady(true)} />
+      <HeroSection on3DLoaded={() => setIs3DReady(true)} startTyping={!loading} />
       <AboutSection />
       <SkillsSection />
       <ProjectsSection />

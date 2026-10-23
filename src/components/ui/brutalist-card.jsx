@@ -73,11 +73,11 @@ const SkillCard = React.forwardRef(({
       {...props}
     >
       <div className="flex items-center gap-4 mb-4">
-        <div className="text-3xl">{icon}</div>
+        <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">{icon}</div>
         <div>
           <h3 className="text-xl font-bold">{name}</h3>
-          <span className={`inline-block px-3 py-1 rounded-full text-white text-sm font-bold ${levelColor}`}>
-            ⭐ {level}
+          <span className={`inline-block px-3 py-0.5 rounded-full text-white text-xs font-bold ${levelColor}`}>
+            {level}
           </span>
         </div>
       </div>

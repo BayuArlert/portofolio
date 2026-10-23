@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Star, ExternalLink, Github, X } from 'lucide-react';
+import { Star, ExternalLink, Github, X, Briefcase, Sparkles, Rocket } from 'lucide-react';
 
 const projects = [
   {
@@ -156,13 +156,14 @@ const Lightbox = ({ project, onClose }) => {
           <div className="flex gap-3 flex-wrap items-center">
             {project.isService ? (
               <a
-                href="https://www.linkedin.com/in/agung-bayu-131a47295/"
+                href="https://api.whatsapp.com/send/?phone=6285643116008&text&type=phone_number&app_absent=0"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-6 py-2.5 rounded-xl border-2 border-black text-sm font-bold text-white shadow-[3px_3px_0px_0px_#000000] hover:shadow-[5px_5px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
                 style={{ backgroundColor: project.accentColor }}
               >
-                💼 Inquire Scraping Service
+                <Briefcase className="w-4 h-4" />
+                Inquire Scraping Service
               </a>
             ) : (
               <>
@@ -305,7 +306,7 @@ const ProjectsSection = () => {
           <div className="inline-flex items-center gap-2 bg-white border-4 border-black rounded-full px-6 py-3 font-bold shadow-[4px_4px_0px_0px_#000000] mb-8">
             <Star className="w-5 h-5 text-yellow-500" />
             Featured Work
-            <span className="text-xl">⚡</span>
+            <Sparkles className="w-4 h-4 text-amber-500" />
           </div>
           <h2 className="text-5xl lg:text-7xl font-black mb-4">
             <span className="gradient-text">Creative Projects</span>
@@ -327,8 +328,9 @@ const ProjectsSection = () => {
         </div>
 
         <div className="text-center mt-12">
-          <p className="text-gray-400 text-sm font-medium">
-            More projects in progress — stay tuned 🚀
+          <p className="text-gray-400 text-sm font-medium flex items-center justify-center gap-1.5">
+            More projects in progress — stay tuned
+            <Rocket className="w-4 h-4 text-gray-500" />
           </p>
         </div>
       </div>

@@ -1,5 +1,5 @@
-import { Heart, Target, Zap, Bot } from 'lucide-react';
-import { StatCard, EmojiCard } from './ui/brutalist-card';
+import { Heart, Target, Zap, Bot, Brain, SearchCheck, Rocket } from 'lucide-react';
+import { StatCard } from './ui/brutalist-card';
 
 const AboutSection = () => {
   const stats = [
@@ -27,19 +27,19 @@ const AboutSection = () => {
 
   const highlights = [
     {
-      icon: "⚡",
+      icon: <Zap className="w-5 h-5 text-black" />,
       text: "High-Velocity Shipping: Rapidly turning ideas into functional apps using modern AI workflows"
     },
     {
-      icon: "🧠",
+      icon: <Brain className="w-5 h-5 text-black" />,
       text: "Solid Fundamentals: Deep grasp of JavaScript, React lifecycles, state management, and architecture"
     },
     {
-      icon: "🔍",
+      icon: <SearchCheck className="w-5 h-5 text-black" />,
       text: "Critical Code Auditing: Evaluating, debugging, and refining code for security and maintainability"
     },
     {
-      icon: "🚀",
+      icon: <Rocket className="w-5 h-5 text-black" />,
       text: "Modern Full-Stack Mastery: Hands-on expertise with React, Node.js, modern databases, and clean UI"
     }
   ];
@@ -73,7 +73,7 @@ const AboutSection = () => {
             <div className="space-y-4">
               {highlights.map((highlight, index) => (
                 <div key={index} className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#00bcd4] border-4 border-black rounded-full flex items-center justify-center text-xl">
+                  <div className="w-12 h-12 bg-[#00bcd4] border-4 border-black rounded-full flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_0px_#000000]">
                     {highlight.icon}
                   </div>
                   <p className="text-gray-700 font-medium">{highlight.text}</p>
@@ -82,10 +82,24 @@ const AboutSection = () => {
             </div>
           </div>
           
-          {/* Right side - Stats and emoji */}
+          {/* Right side - Stats and generated avatar */}
           <div className="space-y-8">
             <div className="flex justify-center">
-              <EmojiCard emoji="👨‍💻" />
+              <div className="relative group">
+                <div className="w-56 h-56 sm:w-64 sm:h-64 bg-[#ffecb3] border-4 border-black rounded-3xl p-3 shadow-[8px_8px_0px_0px_#000000] group-hover:shadow-[12px_12px_0px_0px_#000000] group-hover:-translate-x-1 group-hover:-translate-y-1 transition-all duration-300 overflow-hidden flex items-center justify-center">
+                  <img
+                    src="/images/about-developer-avatar.jpg"
+                    alt="Agung Bayu Saputra - Developer Illustration"
+                    className="w-full h-full object-cover rounded-2xl border-2 border-black"
+                  />
+                </div>
+                {/* Floating badge */}
+                <div className="absolute -bottom-3 -right-2 bg-[#a8f0dc] border-3 border-black rounded-xl px-3 py-1.5 shadow-[4px_4px_0px_0px_#000000] text-xs font-black flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+                  <span>Code & Ship</span>
+                  <Rocket className="w-3.5 h-3.5 text-black" />
+                </div>
+              </div>
             </div>
             
             <div className="text-center">

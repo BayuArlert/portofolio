@@ -6,7 +6,7 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { Volume2, VolumeX } from 'lucide-react';
 
-const HeroSection = ({ on3DLoaded }) => {
+const HeroSection = ({ on3DLoaded, startTyping = true }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
@@ -74,18 +74,23 @@ const HeroSection = ({ on3DLoaded }) => {
             
             {/* Main heading */}
             <div className="space-y-4">
-              <h1 className="text-6xl lg:text-8xl font-black leading-tight">
-                <TypeAnimation
-                  sequence={[
-                    'Agung Bayu Saputra',
-                    1000, // wait 1s before blinking
-                  ]}
-                  wrapper="span"
-                  speed={50}
-                  repeat={0} // Do not repeat
-                  cursor={true} // Show blinking cursor
-                  className="gradient-text"
-                />
+              <h1 className="text-6xl lg:text-8xl font-black leading-tight min-h-[1.2em]">
+                {startTyping ? (
+                  <TypeAnimation
+                    sequence={[
+                      350, // jeda sedikit saat loader terangkat agar efek ketik terlihat sempurna dari huruf pertama
+                      'Agung Bayu Saputra',
+                      1000,
+                    ]}
+                    wrapper="span"
+                    speed={45}
+                    repeat={0}
+                    cursor={true}
+                    className="gradient-text"
+                  />
+                ) : (
+                  <span className="opacity-0">Agung Bayu Saputra</span>
+                )}
               </h1>
               
               <h2 className="text-2xl lg:text-3xl font-bold text-[#00bcd4]">
