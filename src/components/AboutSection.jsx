@@ -5,7 +5,7 @@ const AboutSection = () => {
   const stats = [
     {
       icon: <Target className="w-8 h-8 text-[#00bcd4]" />,
-      number: "5+",
+      number: "6+",
       label: "Projects Built"
     },
     {

@@ -63,7 +63,7 @@ const projects = [
     title: 'Google Maps & Web Data Scraper',
     description:
       'Automated web scraping and lead generation service for Google Maps and target websites. Capable of extracting structured business leads (names, ratings, contact numbers, addresses, websites) and exporting clean datasets for market analysis.',
-    technologies: ['Octoparse', 'Custom Tool', 'Web Scraping', 'Data Extraction'],
+    technologies: ['Web Scraping', 'Data Extraction', 'Lead Gen', 'Automation'],
     accentColor: '#2563eb',
     image: '/images/project-gmaps-scraper.jpg',
     images: [
@@ -71,6 +71,20 @@ const projects = [
     ],
     isService: true,
     size: 'normal',
+  },
+  {
+    id: '06',
+    title: 'Job Portal & Directory Scraper (Octoparse)',
+    description:
+      'Automated multi-page web scraping workflow built in Octoparse for job portals and enterprise directories (e.g. SurabayaKarir, Loker Jakarta, Educational Institutions). Handles complex pagination loops, dynamic scrolling, nested item extraction, and structured export to Excel/CSV.',
+    technologies: ['Octoparse', 'Workflow Automation', 'Web Scraping', 'Data Extraction'],
+    accentColor: '#0284c7',
+    image: '/images/scrape_octoparse.png',
+    images: [
+      { label: 'Octoparse Workflow & Extraction', url: '/images/scrape_octoparse.png' },
+    ],
+    isService: true,
+    size: 'large',
   },
 ];
 
