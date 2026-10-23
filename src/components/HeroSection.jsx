@@ -1,13 +1,12 @@
-import { Suspense, lazy, useState, useRef, useEffect } from 'react';
+import { Suspense, useState, useRef, useEffect } from 'react';
+import Spline from '@splinetool/react-spline';
 import { TypeAnimation } from 'react-type-animation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { Volume2, VolumeX, Music } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 
-const Spline = lazy(() => import('@splinetool/react-spline'));
-
-const HeroSection = () => {
+const HeroSection = ({ on3DLoaded }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
@@ -36,9 +35,14 @@ const HeroSection = () => {
       if (spline._camera?.controls) {
         spline._camera.controls.enabled = false;
       }
-      const controls = spline.findObjectByName?.('Camera');
-      if (controls?.controls) controls.controls.enabled = false;
+      const camera = spline.findObjectByName?.('Camera') || spline._camera;
+      if (camera?.controls) camera.controls.enabled = false;
     } catch (_) {}
+
+    // Signal that 3D room is fully ready
+    if (on3DLoaded) {
+      on3DLoaded();
+    }
   };
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -130,8 +134,8 @@ const HeroSection = () => {
             </div>
           </div>
           
-          {/* Right side - 3D Spline Room (canvas, transparan, menyatu) */}
-          <div className="w-full h-[500px] lg:h-[680px] relative overflow-hidden rounded-3xl">
+          {/* Right side - 3D Spline Room (canvas, transparan, menyatu, scaled down on mobile) */}
+          <div className="w-full h-[330px] sm:h-[460px] lg:h-[680px] relative flex items-center justify-center overflow-visible">
             {/* Audio element for relaxing chill lo-fi */}
             <audio
               ref={audioRef}
@@ -150,50 +154,53 @@ const HeroSection = () => {
                 </div>
               }
             >
-              <Spline
-                scene="https://prod.spline.design/wUBM6zWlm4o2qfc4/scene.splinecode"
-                onLoad={handleSplineLoad}
-                style={{ width: '100%', height: '100%' }}
-              />
-              {/* Transparent overlay — blok drag/orbit agar kamera tetap fix */}
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  zIndex: 10,
-                  cursor: 'default',
-                }}
-              />
+              {/* Scaled 3D Room Box - Rendered at full uncropped proportions, then scaled down uniformly to fit mobile screens */}
+              <div className="w-[600px] sm:w-[640px] lg:w-full h-[520px] sm:h-[560px] lg:h-full scale-[0.58] sm:scale-[0.80] lg:scale-100 origin-center flex-shrink-0 relative">
+                <Spline
+                  scene="https://prod.spline.design/wUBM6zWlm4o2qfc4/scene.splinecode"
+                  onLoad={handleSplineLoad}
+                  style={{ width: '100%', height: '100%' }}
+                />
+                {/* Transparent overlay — blok drag/orbit agar kamera tetap fix */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    zIndex: 10,
+                    cursor: 'default',
+                  }}
+                />
+              </div>
             </Suspense>
 
-            {/* Interactive Speaker Widget (Bottom Right) */}
-            <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
+            {/* Interactive Speaker Widget (Bottom Right - Compact on Mobile) */}
+            <div className="absolute bottom-1 right-1 sm:bottom-4 sm:right-4 z-20 flex items-center gap-2">
               <button
                 type="button"
                 onClick={toggleAudio}
-                className="group bg-white/95 backdrop-blur-md border-3 border-black rounded-2xl px-4 py-2.5 shadow-[4px_4px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2.5 text-sm font-black cursor-pointer"
+                className="group bg-white/95 backdrop-blur-md border-2 sm:border-3 border-black rounded-xl sm:rounded-2xl px-2.5 py-1.5 sm:px-4 sm:py-2.5 shadow-[3px_3px_0px_0px_#000000] sm:shadow-[4px_4px_0px_0px_#000000] hover:shadow-[5px_5px_0px_0px_#000000] hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 text-xs sm:text-sm font-black cursor-pointer"
                 title="Klik untuk nyalakan/matikan backsound santai"
               >
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center border-2 border-black transition-colors ${isPlaying ? 'bg-[#00bcd4] text-white' : 'bg-gray-100 text-gray-700'}`}>
+                <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl flex items-center justify-center border-2 border-black transition-colors ${isPlaying ? 'bg-[#00bcd4] text-white' : 'bg-gray-100 text-gray-700'}`}>
                   {isPlaying ? (
-                    <Volume2 className="w-4 h-4 animate-pulse" />
+                    <Volume2 className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse" />
                   ) : (
-                    <VolumeX className="w-4 h-4" />
+                    <VolumeX className="w-3 h-3 sm:w-4 sm:h-4" />
                   )}
                 </div>
 
                 <div className="flex flex-col items-start leading-tight">
-                  <span className="text-[10px] text-gray-500 uppercase tracking-wider font-extrabold">Room Speaker</span>
-                  <span className="text-xs font-black text-black">
+                  <span className="text-[8px] sm:text-[10px] text-gray-500 uppercase tracking-wider font-extrabold">Room Speaker</span>
+                  <span className="text-[10px] sm:text-xs font-black text-black">
                     {isPlaying ? 'Chill Lo-Fi: ON' : 'Sound: OFF'}
                   </span>
                 </div>
 
                 {isPlaying && (
-                  <div className="flex items-end gap-1 h-3.5 ml-1">
-                    <span className="w-1 bg-[#00bcd4] rounded-full animate-bounce [animation-duration:0.6s] h-3.5" />
-                    <span className="w-1 bg-[#2196f3] rounded-full animate-bounce [animation-duration:0.8s] h-2.5" />
-                    <span className="w-1 bg-[#e91e63] rounded-full animate-bounce [animation-duration:0.5s] h-3" />
+                  <div className="flex items-end gap-0.5 sm:gap-1 h-3 sm:h-3.5 ml-0.5">
+                    <span className="w-0.5 sm:w-1 bg-[#00bcd4] rounded-full animate-bounce [animation-duration:0.6s] h-3 sm:h-3.5" />
+                    <span className="w-0.5 sm:w-1 bg-[#2196f3] rounded-full animate-bounce [animation-duration:0.8s] h-2 sm:h-2.5" />
+                    <span className="w-0.5 sm:w-1 bg-[#e91e63] rounded-full animate-bounce [animation-duration:0.5s] h-2.5 sm:h-3" />
                   </div>
                 )}
               </button>

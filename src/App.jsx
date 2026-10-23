@@ -10,11 +10,17 @@ import './App.css';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [is3DReady, setIs3DReady] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#faf9f6]">
-      {loading && <PageLoader onComplete={() => setLoading(false)} />}
-      <HeroSection />
+      {loading && (
+        <PageLoader 
+          is3DReady={is3DReady} 
+          onComplete={() => setLoading(false)} 
+        />
+      )}
+      <HeroSection on3DLoaded={() => setIs3DReady(true)} />
       <AboutSection />
       <SkillsSection />
       <ProjectsSection />
