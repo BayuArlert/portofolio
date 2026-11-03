@@ -1,5 +1,4 @@
-import { Suspense, useState, useRef, useEffect } from 'react';
-import Spline from '@splinetool/react-spline';
+import { Suspense, lazy, useState, useRef, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
@@ -9,13 +8,95 @@ import { motion } from 'framer-motion';
 import {
   staggerContainerVariants,
   staggerItemVariants,
-  fadeUpVariants,
 } from '../hooks/useScrollAnimation';
 
+// Lazy-load Spline ONLY when needed (tree-shaken on mobile bundle)
+const Spline = lazy(() => import('@splinetool/react-spline'));
+
+// ─── Mobile fallback: lightweight decorative card ──────────────────────────
+const MobileHeroDecor = () => (
+  <motion.div
+    className="w-full flex flex-col items-center justify-center gap-4 py-6"
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.6, ease: 'easeOut' }}
+  >
+    {/* Decorative neo-brutalist card */}
+    <div className="relative w-64 h-64 bg-white border-4 border-black rounded-3xl shadow-[8px_8px_0px_0px_#000000] flex flex-col items-center justify-center gap-3 overflow-hidden">
+      {/* Background accent */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#a8f0dc]/40 to-[#00bcd4]/20 pointer-events-none" />
+
+      {/* Initials */}
+      <motion.div
+        className="relative z-10 w-24 h-24 bg-[#00bcd4] border-4 border-black rounded-2xl shadow-[4px_4px_0px_0px_#000000] flex items-center justify-center"
+        animate={{ rotate: [0, -3, 3, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <span className="text-3xl font-black text-white tracking-tight">ABS</span>
+      </motion.div>
+
+      {/* Stack pills */}
+      <div className="relative z-10 flex flex-wrap justify-center gap-1.5 px-4">
+        {['React', 'Vite', 'Node.js', 'AI'].map((tech, i) => (
+          <motion.span
+            key={tech}
+            className="text-[10px] font-black bg-black text-white px-2.5 py-0.5 rounded-full border border-black"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 + i * 0.1 }}
+          >
+            {tech}
+          </motion.span>
+        ))}
+      </div>
+
+      {/* Floating dots */}
+      <motion.div
+        className="absolute top-3 right-3 w-4 h-4 bg-[#e91e63] border-2 border-black rounded-full"
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="absolute bottom-4 left-4 w-3 h-3 bg-[#ff9800] border-2 border-black rounded-full"
+        animate={{ y: [0, 5, 0] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+      />
+    </div>
+
+    {/* Tagline chip */}
+    <motion.div
+      className="inline-flex items-center gap-2 bg-[#00bcd4] border-3 border-black rounded-full px-4 py-2 shadow-[3px_3px_0px_0px_#000000]"
+      animate={{ y: [0, -4, 0] }}
+      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+    >
+      <span className="text-xs font-black text-white">Vibe Coder ✦ Builder</span>
+    </motion.div>
+  </motion.div>
+);
+
+// ─── Main Component ────────────────────────────────────────────────────────
 const HeroSection = ({ on3DLoaded, startTyping = true }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [splineInteractive, setSplineInteractive] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
   const audioRef = useRef(null);
+
+  // Detect desktop breakpoint (≥1024px)
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    setHydrated(true);
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  // On mobile, immediately signal that 3D is "done" so the preloader advances
+  useEffect(() => {
+    if (hydrated && !isDesktop && on3DLoaded) {
+      on3DLoaded();
+    }
+  }, [hydrated, isDesktop, on3DLoaded]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -45,7 +126,6 @@ const HeroSection = ({ on3DLoaded, startTyping = true }) => {
     } catch (_) {}
 
     setTimeout(() => setSplineInteractive(true), 600);
-
     if (on3DLoaded) on3DLoaded();
   };
 
@@ -87,11 +167,7 @@ const HeroSection = ({ on3DLoaded, startTyping = true }) => {
               <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight min-h-[1.2em]">
                 {startTyping ? (
                   <TypeAnimation
-                    sequence={[
-                      350,
-                      'Agung Bayu Saputra',
-                      1000,
-                    ]}
+                    sequence={[350, 'Agung Bayu Saputra', 1000]}
                     wrapper="span"
                     speed={45}
                     repeat={0}
@@ -172,49 +248,58 @@ const HeroSection = ({ on3DLoaded, startTyping = true }) => {
             </motion.div>
           </motion.div>
 
-          {/* Right side — 3D Spline Room (interactive orbit enabled) */}
-          <div className="w-full h-[320px] sm:h-[460px] lg:h-[680px] relative flex items-center justify-center overflow-hidden">
+          {/* Right side — Desktop: 3D Spline Room | Mobile: Lightweight card */}
+          <div className="w-full relative flex items-center justify-center overflow-hidden"
+               style={{ height: isDesktop ? '680px' : 'auto' }}>
+
             {/* Audio element */}
-            <audio ref={audioRef} src="/audio/chill-lofi.mp3" loop preload="auto" />
+            <audio ref={audioRef} src="/audio/chill-lofi.mp3" loop preload="none" />
 
-            <Suspense
-              fallback={
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="w-10 h-10 border-4 border-[#00bcd4] border-t-transparent rounded-full animate-spin" />
-                    <span className="text-sm font-bold text-gray-500">Loading 3D Room...</span>
+            {/* ── DESKTOP ONLY: Spline 3D ── */}
+            {hydrated && isDesktop && (
+              <Suspense
+                fallback={
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-10 h-10 border-4 border-[#00bcd4] border-t-transparent rounded-full animate-spin" />
+                      <span className="text-sm font-bold text-gray-500">Loading 3D Room...</span>
+                    </div>
                   </div>
-                </div>
-              }
-            >
-              {/* Scaled 3D Room Box */}
-              <div className="w-[480px] sm:w-[640px] lg:w-full h-[480px] sm:h-[560px] lg:h-full scale-[0.65] sm:scale-[0.80] lg:scale-100 origin-center flex-shrink-0 relative">
-                <Spline
-                  scene="https://prod.spline.design/wUBM6zWlm4o2qfc4/scene.splinecode"
-                  onLoad={handleSplineLoad}
-                  style={{ width: '100%', height: '100%' }}
-                />
-              </div>
-            </Suspense>
-
-            {/* Drag to Explore hint — fades in after 3D loads */}
-            <motion.div
-              className="absolute top-3 left-1/2 -translate-x-1/2 sm:top-4 z-20 pointer-events-none"
-              initial={{ opacity: 0, y: -8 }}
-              animate={splineInteractive ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <motion.div
-                className="flex items-center gap-2 bg-white/90 backdrop-blur-sm border-2 border-black rounded-full px-3 py-1.5 shadow-[3px_3px_0px_0px_#000000] text-xs font-black"
-                animate={{ y: [0, -4, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                }
               >
-                <MousePointer2 className="w-3.5 h-3.5 text-[#00bcd4]" />
-                <span>Drag to Explore</span>
-              </motion.div>
-            </motion.div>
+                <div className="w-full h-[680px] relative">
+                  <Spline
+                    scene="https://prod.spline.design/wUBM6zWlm4o2qfc4/scene.splinecode"
+                    onLoad={handleSplineLoad}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </div>
+              </Suspense>
+            )}
 
-            {/* Speaker Widget */}
+            {/* ── MOBILE ONLY: Decorative card (no Spline, no heavy bundle) ── */}
+            {hydrated && !isDesktop && <MobileHeroDecor />}
+
+            {/* Drag to Explore hint — desktop only */}
+            {isDesktop && (
+              <motion.div
+                className="absolute top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none"
+                initial={{ opacity: 0, y: -8 }}
+                animate={splineInteractive ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <motion.div
+                  className="flex items-center gap-2 bg-white/90 backdrop-blur-sm border-2 border-black rounded-full px-3 py-1.5 shadow-[3px_3px_0px_0px_#000000] text-xs font-black"
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <MousePointer2 className="w-3.5 h-3.5 text-[#00bcd4]" />
+                  <span>Drag to Explore</span>
+                </motion.div>
+              </motion.div>
+            )}
+
+            {/* Speaker Widget — always visible */}
             <div className="absolute bottom-1 right-1 sm:bottom-4 sm:right-4 z-20 flex items-center gap-2">
               <button
                 type="button"
@@ -253,6 +338,7 @@ const HeroSection = ({ on3DLoaded, startTyping = true }) => {
               </button>
             </div>
           </div>
+
         </div>
       </div>
     </section>

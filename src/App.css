@@ -142,18 +142,25 @@
   }
 }
 
-/* Hide Spline Watermark Badge */
+/* Hide Spline Watermark Badge — all known selectors */
 a[href*="spline.design"],
 a[href*="spline.com"],
+a[href*="spline"],
 #spline-watermark,
 .spline-watermark,
-[data-spline-logo] {
+[data-spline-logo],
+[data-spline],
+canvas ~ a,
+canvas + a,
+canvas ~ div > a {
   display: none !important;
   opacity: 0 !important;
   pointer-events: none !important;
   visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }
-
 
 /* Custom Neo-Brutalist Cursor */
 @media (pointer: fine) {
