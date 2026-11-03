@@ -1,4 +1,12 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  useScrollAnimation,
+  staggerContainerVariants,
+  staggerItemVariants,
+  fadeUpVariants,
+  scaleInVariants,
+} from '../hooks/useScrollAnimation';
 import { Star, ExternalLink, Github, X, Briefcase, Sparkles, Rocket } from 'lucide-react';
 
 const projects = [
@@ -105,7 +113,7 @@ const Lightbox = ({ project, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="relative bg-white border-4 border-black rounded-2xl shadow-[12px_12px_0px_0px_#000000] max-w-4xl w-full overflow-hidden"
+        className="relative bg-white border-4 border-black rounded-2xl shadow-[8px_8px_0px_0px_#000000] sm:shadow-[12px_12px_0px_0px_#000000] max-w-4xl w-full overflow-hidden max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -151,9 +159,9 @@ const Lightbox = ({ project, onClose }) => {
           </div>
         </div>
 
-        <div className="p-8">
-          <h3 className="text-3xl font-black mb-3">{project.title}</h3>
-          <p className="text-gray-600 leading-relaxed mb-5">{project.description}</p>
+        <div className="p-4 sm:p-8">
+          <h3 className="text-xl sm:text-3xl font-black mb-2 sm:mb-3 pr-8">{project.title}</h3>
+          <p className="text-gray-600 leading-relaxed mb-4 sm:mb-5 text-sm sm:text-base">{project.description}</p>
 
           <div className="flex flex-wrap gap-2 mb-6">
             {project.technologies.map((tech) => (
@@ -307,46 +315,68 @@ const GalleryCard = ({ project, onClick }) => {
 /* ─── Section ─── */
 const ProjectsSection = () => {
   const [selected, setSelected] = useState(null);
+  const { ref: headerRef, isInView: headerInView } = useScrollAnimation({ threshold: 0.1 });
+  const { ref: gridRef, isInView: gridInView } = useScrollAnimation({ threshold: 0.05 });
 
   return (
-    <section id="projects" className="py-20 bg-[#faf9f6] relative overflow-hidden">
-      <div className="absolute w-32 h-32 bg-[#e91e63] rounded-full border-4 border-black top-20 right-10 lg:z-auto -z-10" />
-      <div className="absolute w-20 h-20 bg-[#2196f3] rounded-full border-4 border-black top-32 left-32 lg:z-auto -z-10" />
-      <div className="absolute w-16 h-16 bg-[#a8f0dc] rounded-full border-4 border-black top-20 left-64 lg:z-auto -z-10" />
+    <section id="projects" className="py-12 sm:py-20 bg-[#faf9f6] relative overflow-hidden">
+      <div className="absolute w-16 h-16 sm:w-32 sm:h-32 bg-[#e91e63] rounded-full border-4 border-black top-20 right-4 sm:right-10 lg:z-auto -z-10" />
+      <div className="hidden sm:block absolute w-20 h-20 bg-[#2196f3] rounded-full border-4 border-black top-32 left-32 lg:z-auto -z-10" />
+      <div className="hidden sm:block absolute w-16 h-16 bg-[#a8f0dc] rounded-full border-4 border-black top-20 left-64 lg:z-auto -z-10" />
 
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 bg-white border-4 border-black rounded-full px-6 py-3 font-bold shadow-[4px_4px_0px_0px_#000000] mb-8">
-            <Star className="w-5 h-5 text-yellow-500" />
+        <motion.div
+          ref={headerRef}
+          variants={staggerContainerVariants}
+          initial="hidden"
+          animate={headerInView ? 'visible' : 'hidden'}
+          className="text-center mb-10 sm:mb-14"
+        >
+          <motion.div variants={staggerItemVariants} className="inline-flex items-center gap-2 bg-white border-4 border-black rounded-full px-4 sm:px-6 py-2 sm:py-3 font-bold shadow-[4px_4px_0px_0px_#000000] mb-6 sm:mb-8 text-sm sm:text-base">
+            <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
             Featured Work
-            <Sparkles className="w-4 h-4 text-amber-500" />
-          </div>
-          <h2 className="text-5xl lg:text-7xl font-black mb-4">
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-amber-500" />
+          </motion.div>
+          <motion.h2 variants={fadeUpVariants} className="text-3xl sm:text-5xl lg:text-7xl font-black mb-3 sm:mb-4">
             <span className="gradient-text">Creative Projects</span>
-          </h2>
-          <p className="text-xl text-gray-700 max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p variants={staggerItemVariants} className="text-base sm:text-xl text-gray-700 max-w-2xl mx-auto px-2">
             Click any card to explore details, live demo, and source code.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {projects.map((project) => (
-            <GalleryCard
+        <motion.div
+          ref={gridRef}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+        >
+          {projects.map((project, index) => (
+            <motion.div
               key={project.id}
-              project={project}
-              onClick={setSelected}
-            />
+              initial={{ opacity: 0, y: 32 }}
+              animate={gridInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+              transition={{ duration: 0.5, delay: index * 0.09, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <GalleryCard
+                project={project}
+                onClick={setSelected}
+              />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="text-center mt-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={gridInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ delay: 0.6 }}
+          className="text-center mt-12"
+        >
           <p className="text-gray-400 text-sm font-medium flex items-center justify-center gap-1.5">
             More projects in progress — stay tuned
             <Rocket className="w-4 h-4 text-gray-500" />
           </p>
-        </div>
+        </motion.div>
       </div>
 
       <Lightbox key={selected?.id} project={selected} onClose={() => setSelected(null)} />

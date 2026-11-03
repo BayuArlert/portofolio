@@ -153,3 +153,12 @@ a[href*="spline.com"],
   pointer-events: none !important;
   visibility: hidden !important;
 }
+
+
+/* Custom Neo-Brutalist Cursor */
+@media (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active * {
+    cursor: none !important;
+  }
+}

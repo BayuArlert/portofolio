@@ -1,4 +1,12 @@
 import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  useScrollAnimation,
+  fadeUpVariants,
+  staggerContainerVariants,
+  staggerItemVariants,
+  scaleInVariants,
+} from "../hooks/useScrollAnimation";
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -97,6 +105,9 @@ const SkillsSection = () => {
   const [activeTab, setActiveTab] = useState("frontend");
   const tabsRef = useRef({});
   const firstRender = useRef(true);
+  const { ref: headerRef, isInView: headerInView } = useScrollAnimation({ threshold: 0.1 });
+  const { ref: tabRef, isInView: tabInView } = useScrollAnimation({ threshold: 0.1 });
+  const { ref: featureRef, isInView: featureInView } = useScrollAnimation({ threshold: 0.1 });
 
   useEffect(() => {
     if (firstRender.current) {
@@ -317,28 +328,44 @@ const SkillsSection = () => {
   return (
     <section
       id="skills"
-      className="py-20 bg-[#faf9f6] relative overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 bg-[#faf9f6] relative overflow-hidden"
     >
+      {/* Neo-Brutalist Decorative Circles */}
+      <div className="hidden sm:block absolute w-20 h-20 bg-[#ff9800] rounded-full border-4 border-black top-10 left-10 lg:left-20 -z-10 shadow-[3px_3px_0px_0px_#000000]"></div>
+      <div className="hidden sm:block absolute w-16 h-16 bg-[#9c27b0] rounded-full border-4 border-black bottom-10 right-6 lg:right-10 -z-10 shadow-[3px_3px_0px_0px_#000000]"></div>
+
       <div className="container mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 bg-white border-4 border-black rounded-full px-5 py-2.5 font-bold shadow-[4px_4px_0px_0px_#000000] mb-6 sm:mb-8">
-            <Code2 className="w-5 h-5 text-[#00bcd4]" />
+        <motion.div
+          ref={headerRef}
+          variants={staggerContainerVariants}
+          initial="hidden"
+          animate={headerInView ? 'visible' : 'hidden'}
+          className="text-center mb-10 sm:mb-16"
+        >
+          <motion.div variants={staggerItemVariants} className="inline-flex items-center gap-2 bg-white border-4 border-black rounded-full px-4 sm:px-5 py-2 sm:py-2.5 font-bold shadow-[4px_4px_0px_0px_#000000] mb-6 sm:mb-8 text-sm sm:text-base">
+            <Code2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#00bcd4]" />
             TECH SKILLS
-          </div>
+          </motion.div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black mb-4 sm:mb-6">
+          <motion.h2 variants={fadeUpVariants} className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black mb-4 sm:mb-6">
             <span className="text-black">SKILLS </span>
             <span className="gradient-text">SHOWCASE</span>
-          </h2>
+          </motion.h2>
 
-          <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-2xl mx-auto px-2 font-medium">
+          <motion.p variants={staggerItemVariants} className="text-base sm:text-lg md:text-xl text-gray-700 max-w-2xl mx-auto px-2 font-medium">
             Crafting beautiful, interactive, and high-performance digital experiences
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Tab Navigation */}
-        <div className="flex justify-center mb-16 px-6 py-4">
+        <motion.div
+          ref={tabRef}
+          variants={fadeUpVariants}
+          initial="hidden"
+          animate={tabInView ? 'visible' : 'hidden'}
+          className="flex justify-center mb-10 sm:mb-16 px-1 sm:px-6 py-2 sm:py-4"
+        >
           <div
             className="flex gap-1 sm:gap-2 bg-white border-4 border-black rounded-2xl 
                   p-1 sm:p-2 shadow-[6px_6px_0px_0px_#000000] 
@@ -397,21 +424,45 @@ const SkillsSection = () => {
               <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-10 sm:mb-20">
-          {(skills[activeTab] ?? []).map((skill, index) => (
-            <SkillCard key={index} {...skill} />
-          ))}
-        </div>
+        {/* Skills Grid — animates when tab changes */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-10 sm:mb-20"
+          >
+            {(skills[activeTab] ?? []).map((skill, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <SkillCard {...skill} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <motion.div
+          ref={featureRef}
+          variants={staggerContainerVariants}
+          initial="hidden"
+          animate={featureInView ? 'visible' : 'hidden'}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+        >
           {features.map((feature, index) => (
-            <FeatureCard key={index} {...feature} />
+            <motion.div key={index} variants={scaleInVariants}>
+              <FeatureCard {...feature} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
